@@ -1,0 +1,116 @@
+{
+  "title": "JRF NOTES PDF",
+  "sourceUrl": "https://notebook.google.com/notebook/40dcdcaf-6234-4653-b4ae-ea989f67f5a8",
+  "questions": [
+    {
+      "question": "In deductive logic, what defines a sound argument?",
+      "choices": [
+        "It is valid and has all true premises",
+        "It is strong and has probable conclusions",
+        "It has true premises regardless of validity",
+        "It is an invalid argument with true premises"
+      ],
+      "answerIndex": 0,
+      "explanation": "A deductive argument is sound when it is valid and all its premises are true."
+    },
+    {
+      "question": "According to Aristotle's classical linear communication model, what are the primary elements?",
+      "choices": [
+        "Information source, transmitter, channel, receiver, destination, and noise",
+        "Speaker, speech, occasion, audience, and effect",
+        "Communicator, message, medium, receiver, and feedback",
+        "Sender, encoder, decoder, interpreter, and field of experience"
+      ],
+      "answerIndex": 1,
+      "explanation": "Aristotle's speaker-centred model consists of speaker, speech, occasion, audience, and effect."
+    },
+    {
+      "question": "Which concept was introduced in the Shannon-Weaver model to represent something that distorts a message during transmission?",
+      "choices": [
+        "Field of experience",
+        "Noise",
+        "Feedback loop",
+        "Circular interpretation"
+      ],
+      "answerIndex": 1,
+      "explanation": "The Shannon-Weaver model includes noise in the channel as a source of signal or message distortion."
+    },
+    {
+      "question": "Which of the following is NOT one of the four instructional quadrants of courses hosted on the SWAYAM platform?",
+      "choices": [
+        "Video lecture",
+        "Specially prepared downloadable and printable reading material",
+        "Compulsory physical classroom attendance",
+        "Online discussion forum for clearing doubts"
+      ],
+      "answerIndex": 2,
+      "explanation": "The four quadrants include video lectures, reading material, self-assessment tests or quizzes, and online discussion forums."
+    },
+    {
+      "question": "Under the SWAYAM digital initiative, which organization is the National Coordinator for non-technical postgraduate education?",
+      "choices": [
+        "NPTEL",
+        "UGC",
+        "NCERT",
+        "AICTE"
+      ],
+      "answerIndex": 1,
+      "explanation": "The University Grants Commission (UGC) is the National Coordinator for non-technical postgraduate education on SWAYAM."
+    },
+    {
+      "question": "Which statement correctly describes Read-Only Memory (ROM) in a computer system?",
+      "choices": [
+        "It is volatile memory that loses its contents when power is turned off",
+        "It is internal storage used exclusively for temporary CPU cache calculations",
+        "It is non-volatile memory that retains its contents when power is turned off and stores the bootstrap loader",
+        "It is an external optical storage medium used only for recording high-definition video"
+      ],
+      "answerIndex": 2,
+      "explanation": "ROM is non-volatile and retains stored information when power is off; it can hold the bootstrap program used to start a computer."
+    },
+    {
+      "question": "In the computer memory hierarchy, which storage component provides the fastest data access and is located directly inside the CPU?",
+      "choices": [
+        "Hard Disk Drive (HDD)",
+        "Main Memory (DRAM)",
+        "Registers",
+        "Optical Disk"
+      ],
+      "answerIndex": 2,
+      "explanation": "Registers are inside the CPU and are the fastest storage units in the computer memory hierarchy."
+    },
+    {
+      "question": "In statistical hypothesis testing, a Type I error occurs when a researcher:",
+      "choices": [
+        "Rejects a null hypothesis that is actually true",
+        "Accepts a null hypothesis that is false",
+        "Accepts an alternative hypothesis when it is false",
+        "Fails to reject a true alternative hypothesis"
+      ],
+      "answerIndex": 0,
+      "explanation": "A Type I (alpha) error is rejecting a null hypothesis that is actually true."
+    },
+    {
+      "question": "The Montreal Protocol, opened for signature in 1987, was primarily established to:",
+      "choices": [
+        "Control and phase out ozone-depleting substances",
+        "Mandate legally binding greenhouse gas emission reductions",
+        "Conserve world cultural and natural heritage sites",
+        "Regulate international transboundary movements of hazardous wastes"
+      ],
+      "answerIndex": 0,
+      "explanation": "The Montreal Protocol was established to control and phase out ozone-depleting substances such as CFCs."
+    },
+    {
+      "question": "Which level of teaching, propounded by Herbart, is teacher-centred and focuses primarily on rote learning, recall, and recognition of facts?",
+      "choices": [
+        "Reflective level of teaching",
+        "Memory level of teaching",
+        "Understanding level of teaching",
+        "Autonomous development level of teaching"
+      ],
+      "answerIndex": 1,
+      "explanation": "The memory level of teaching is teacher-dominated and centres on factual memorisation and recognition."
+    }
+  ]
+}

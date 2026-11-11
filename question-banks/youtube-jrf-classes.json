@@ -1,0 +1,76 @@
+{
+  "title": "YouTube JRF classes",
+  "sourceUrl": "https://notebook.google.com/notebook/8fa9e405-e15d-4082-8f8a-b835354687eb",
+  "questions": [
+    {
+      "question": "In experimental research, which variable is systematically manipulated by the researcher to observe its effect on the outcome?",
+      "choices": ["Extraneous variable", "Independent variable", "Dependent variable", "Intervening variable"],
+      "answerIndex": 1,
+      "explanation": "The researcher manipulates the independent variable to observe changes in the dependent variable."
+    },
+    {
+      "question": "Which type of research design is also referred to as ex post facto research when an already occurred event is examined retrospectively without random assignment?",
+      "choices": ["Quasi-experimental research", "Pure fundamental research", "True experimental research", "Action research"],
+      "answerIndex": 0,
+      "explanation": "The notebook associates retrospective examination without random assignment with quasi-experimental, ex post facto research."
+    },
+    {
+      "question": "Which communication model first introduced the concept of noise and is often called the mathematical model?",
+      "choices": ["Berlo's SMCR Model", "Aristotle's Model", "Shannon-Weaver Model", "Schramm's Interactive Model"],
+      "answerIndex": 2,
+      "explanation": "The Shannon-Weaver model is a linear mathematical model that formally includes noise."
+    },
+    {
+      "question": "In Harold Lasswell's 5 Ws model, the study of “Who” corresponds to which type of analysis?",
+      "choices": ["Media analysis", "Content analysis", "Audience analysis", "Control analysis"],
+      "answerIndex": 3,
+      "explanation": "The “Who” component concerns the sender or communicator and corresponds to control analysis."
+    },
+    {
+      "question": "Where are a computer's startup bootstrap program and BIOS permanently retained as firmware?",
+      "choices": ["Cache Memory", "Random Access Memory (RAM)", "Read-Only Memory (ROM)", "Hard Disk Drive (HDD)"],
+      "answerIndex": 2,
+      "explanation": "The notebook describes the bootstrap program and BIOS as non-volatile firmware stored on ROM."
+    },
+    {
+      "question": "Which destructive computer program masquerades as a harmless application while secretly installing malicious code or creating backdoors?",
+      "choices": ["Trojan Horse", "Computer Worm", "Adware", "Spyware"],
+      "answerIndex": 0,
+      "explanation": "A Trojan Horse disguises itself as a legitimate application while carrying malicious code."
+    },
+    {
+      "question": "In the traditional Square of Opposition, if the universal affirmative proposition A is true, which proposition is false by contradictory relation?",
+      "choices": ["E (No students are hard-working)", "I (Some students are hard-working)", "O (Some students are not hard-working)", "The subaltern proposition"],
+      "answerIndex": 2,
+      "explanation": "A and O are contradictories, so if A is true, O is false."
+    },
+    {
+      "question": "According to the traditional Square of Opposition, which rule defines the relationship between contrary propositions A and E?",
+      "choices": [
+        "Both can be true together, but cannot be false together",
+        "Both cannot be true together, but can both be false together",
+        "If one is false, the other must necessarily be false",
+        "Both must always carry the exact same truth value"
+      ],
+      "answerIndex": 1,
+      "explanation": "Contrary propositions cannot both be true, but they can both be false."
+    },
+    {
+      "question": "How many Sustainable Development Goals and global targets were adopted under the United Nations 2030 Agenda?",
+      "choices": ["8 Goals and 21 Targets", "17 Goals and 169 Targets", "15 Goals and 150 Targets", "12 Goals and 100 Targets"],
+      "answerIndex": 1,
+      "explanation": "The 2030 Agenda comprises 17 Sustainable Development Goals and 169 targets."
+    },
+    {
+      "question": "Under NEP 2020, which proposed vertical of the Higher Education Commission of India handles funding and financing?",
+      "choices": [
+        "National Higher Education Regulatory Council (NHERC)",
+        "General Education Council (GEC)",
+        "Higher Education Grants Council (HEGC)",
+        "National Accreditation Council (NAC)"
+      ],
+      "answerIndex": 2,
+      "explanation": "The Higher Education Grants Council (HEGC) is the proposed vertical responsible for funding and financing."
+    }
+  ]
+}

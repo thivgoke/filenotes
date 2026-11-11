@@ -1,0 +1,66 @@
+{
+  "title": "HOME SCIENCE PYQ",
+  "sourceUrl": "https://notebook.google.com/notebook/16290978-36e8-448e-a73b-df691a1031a8",
+  "questions": [
+    {
+      "question": "What is the primary reason for blanching food in food preservation?",
+      "choices": ["Cleans the food", "Prevents pest infestation", "Inactivates enzymes in food", "Prevents food from drying"],
+      "answerIndex": 2,
+      "explanation": "Blanching is a thermal process used to destroy enzymatic activity in foods before freezing or canning."
+    },
+    {
+      "question": "Under a microscope, the cross-sectional view of a mercerised cotton fibre appears:",
+      "choices": ["Kidney shaped", "Round", "Trilobal", "Polygonal"],
+      "answerIndex": 1,
+      "explanation": "Mercerisation with caustic soda swells cotton fibres, changing their cross-section from a natural kidney shape to a round shape."
+    },
+    {
+      "question": "Which component of a standard sewing machine is situated on its bed?",
+      "choices": ["Spool pin", "Oscillating hook", "Tension regulator", "Presser foot"],
+      "answerIndex": 1,
+      "explanation": "The oscillating hook is housed in the bed assembly beneath the needle plate."
+    },
+    {
+      "question": "The principle of motor and physical development that proceeds from the top of the body downwards to the feet is known as:",
+      "choices": ["Proximodistal development", "Orthogenetic development", "Cephalocaudal development", "Genotypical development"],
+      "answerIndex": 2,
+      "explanation": "The cephalocaudal trend describes head-to-tail development, with the head and upper body developing before the lower extremities."
+    },
+    {
+      "question": "In statistical hypothesis testing, committing a Type I error occurs when a researcher:",
+      "choices": ["Accepts a false null hypothesis", "Rejects a true null hypothesis", "Rejects an alternative hypothesis", "Fails to draw a representative sample"],
+      "answerIndex": 1,
+      "explanation": "A Type I error is the incorrect rejection of a null hypothesis that is actually true."
+    },
+    {
+      "question": "According to the established procedural steps of extension teaching, which is the first step?",
+      "choices": ["Interest", "Satisfaction", "Action", "Attention"],
+      "answerIndex": 3,
+      "explanation": "The classical extension teaching sequence begins with Attention, followed by Interest, Desire, Conviction, Action, and Satisfaction."
+    },
+    {
+      "question": "The systematic study of the interaction between human workers, machines, and the physical work environment is called:",
+      "choices": ["Ecology", "Engineering", "Automation", "Ergonomics"],
+      "answerIndex": 3,
+      "explanation": "Ergonomics studies how to design workplaces, equipment, and tasks to fit human capabilities."
+    },
+    {
+      "question": "In fruit preservation, jams and jellies are preserved against microbial spoilage by maintaining a sugar concentration of:",
+      "choices": ["65%", "75%", "40%", "50%"],
+      "answerIndex": 0,
+      "explanation": "A finished sugar concentration of about 65% creates osmotic pressure that inhibits microbial growth and supports pectin gelation."
+    },
+    {
+      "question": "Well-planned accent lighting in residential interior design is specifically intended to focus attention on:",
+      "choices": ["The lighting source", "The lighting fixture", "Desired objects", "Work surfaces"],
+      "answerIndex": 2,
+      "explanation": "Accent lighting draws visual attention to decorative features, architectural elements, or artwork."
+    },
+    {
+      "question": "The traditional double-ikat woven textiles known as Patola sarees are produced in which Indian state?",
+      "choices": ["Andhra Pradesh", "Gujarat", "Rajasthan", "Karnataka"],
+      "answerIndex": 1,
+      "explanation": "Patola is a silk double-ikat weave originating from Patan in Gujarat, India."
+    }
+  ]
+}

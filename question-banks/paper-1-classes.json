@@ -1,0 +1,71 @@
+{
+  "title": "PAPER 1 CLASSES",
+  "sourceUrl": "https://notebook.google.com/notebook/79612cbf-64b1-430b-9c56-26e9aee34c90",
+  "questions": [
+    {
+      "question": "According to the notes on levels of teaching, who is the primary proponent associated with the Memory Level of Teaching?",
+      "choices": ["H. C. Morrison", "Johann Friedrich Herbart", "Maurice P. Hunt", "B. F. Skinner"],
+      "answerIndex": 1,
+      "explanation": "The sources identify Herbart as the proponent associated with the Memory Level of Teaching."
+    },
+    {
+      "question": "In teaching aptitude, what is the primary communication pattern involved in reflective level teaching?",
+      "choices": ["Linear", "Bottom-up", "Interactional", "Transactional"],
+      "answerIndex": 3,
+      "explanation": "Reflective-level teaching uses a transactional communication pattern."
+    },
+    {
+      "question": "In experimental research, which variable is directly manipulated by the researcher to observe its effect?",
+      "choices": ["Dependent variable", "Extraneous variable", "Independent variable", "Intervening variable"],
+      "answerIndex": 2,
+      "explanation": "The independent variable is the treatment or causal variable manipulated by the researcher."
+    },
+    {
+      "question": "Which of the following is classified as a probability sampling method?",
+      "choices": ["Stratified sampling", "Quota sampling", "Purposive sampling", "Snowball sampling"],
+      "answerIndex": 0,
+      "explanation": "Stratified sampling is a probability sampling technique; the other listed methods are non-probability methods."
+    },
+    {
+      "question": "What is a defining characteristic of Ex Post Facto research?",
+      "choices": [
+        "The researcher directly manipulates the independent variable in a controlled setting",
+        "Subjects are assigned at random to experimental and treatment groups",
+        "The study is carried out after the incident and the dependent variable is measured first",
+        "Hypothesis testing is completely absent"
+      ],
+      "answerIndex": 2,
+      "explanation": "Ex post facto research occurs after an event; the dependent variable is observed first, without direct manipulation or random assignment."
+    },
+    {
+      "question": "Which computer memory component is volatile and loses stored data when power is lost?",
+      "choices": ["Read-Only Memory (ROM)", "Random Access Memory (RAM)", "Hard Disk Drive (HDD)", "Optical Disk (CD/DVD)"],
+      "answerIndex": 1,
+      "explanation": "RAM is volatile memory and loses its stored information when the computer is turned off."
+    },
+    {
+      "question": "Which category of malware can replicate across a network without human interaction and without attaching to a host file?",
+      "choices": ["Computer virus", "Trojan horse", "Worm", "Keylogger"],
+      "answerIndex": 2,
+      "explanation": "Worms self-replicate and spread without user interaction or attachment to a host executable."
+    },
+    {
+      "question": "In the OSI seven-layer reference model, which layer handles end-to-end delivery of a complete message using segments?",
+      "choices": ["Data Link Layer", "Network Layer", "Transport Layer", "Session Layer"],
+      "answerIndex": 2,
+      "explanation": "The Transport Layer handles data in segments and supports end-to-end delivery."
+    },
+    {
+      "question": "How many Millennium Development Goals were adopted by 189 UN member states in 2000, and what was their target year?",
+      "choices": ["8 goals to be achieved by 2015", "17 goals to be achieved by 2030", "10 goals to be achieved by 2020", "8 goals to be achieved by 2030"],
+      "answerIndex": 0,
+      "explanation": "The Millennium Development Goals comprised eight goals with a 2015 target deadline."
+    },
+    {
+      "question": "Under the 2016 Kigali Amendment to the Montreal Protocol, which class of chemicals is specifically targeted for phase-down?",
+      "choices": ["Chlorofluorocarbons (CFCs)", "Hydrochlorofluorocarbons (HCFCs)", "Hydrofluorocarbons (HFCs)", "Halons"],
+      "answerIndex": 2,
+      "explanation": "The Kigali Amendment targets hydrofluorocarbons (HFCs) for phase-down."
+    }
+  ]
+}

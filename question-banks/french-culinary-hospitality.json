@@ -1,0 +1,81 @@
+{
+  "title": "French Culinary Terminology and Hospitality Management Study Guide",
+  "sourceUrl": "https://notebook.google.com/notebook/88f5339c-bb91-4dd4-91fb-06df899492b5",
+  "questions": [
+    {
+      "question": "In French culinary terminology, what does the term “mise en place” literally translate to?",
+      "choices": ["In its place", "In the fashion of", "With the juice", "To entertain the mouth"],
+      "answerIndex": 0,
+      "explanation": "Mise en place means “in its place” and refers to preparing and arranging ingredients and equipment before cooking or service."
+    },
+    {
+      "question": "Which classic preparation consists of equal parts flour and fat cooked together as a thickening base for sauces and soups?",
+      "choices": ["Mirepoix", "Roux", "Coulis", "Panade"],
+      "answerIndex": 1,
+      "explanation": "A roux is a cooked mixture of flour and fat used to thicken soups, sauces, and gravies."
+    },
+    {
+      "question": "Which French culinary technique involves rolling leafy greens or herbs tightly and cutting them into thin ribbons?",
+      "choices": ["Julienne", "Brunoise", "Chiffonade", "Tournée"],
+      "answerIndex": 2,
+      "explanation": "Chiffonade stacks, rolls, and slices leafy vegetables or herbs into thin strips."
+    },
+    {
+      "question": "What is a bouquet garni in classical culinary practice?",
+      "choices": [
+        "A bundle of herbs tied together or wrapped in muslin to season stocks, soups, and stews before removal",
+        "A finely puréed vegetable sauce served hot or cold",
+        "A cold platter of assorted cured meats and offal",
+        "A clear soup clarified using egg whites and aromatics"
+      ],
+      "answerIndex": 0,
+      "explanation": "A bouquet garni is a bundle of aromatic herbs used to flavour simmering liquids and removed before serving."
+    },
+    {
+      "question": "What does the French culinary term “duxelles” refer to?",
+      "choices": [
+        "A thin slice of boneless meat or fish pounded flat",
+        "A finely chopped mixture of mushrooms and shallots cooked until dry",
+        "A reduction of pan drippings swilled with wine or stock",
+        "A custard baked in a flowerpot-shaped mould"
+      ],
+      "answerIndex": 1,
+      "explanation": "Duxelles is a finely chopped mushroom and shallot mixture cooked with seasoning, often used in stuffings and sauces."
+    },
+    {
+      "question": "In extension and communication studies, which communication model explicitly places “Treatment” between Message and Channel?",
+      "choices": ["Berlo’s SMCR Model", "Aristotle’s Model", "Leagans’ Model", "Shannon-Weaver Model"],
+      "answerIndex": 2,
+      "explanation": "J. Paul Leagans’ model includes Source, Message, Treatment, Channel, Audience, and Audience Response."
+    },
+    {
+      "question": "What is the correct sequence of the five stages in the Design Thinking process?",
+      "choices": [
+        "Empathize, Define, Ideate, Prototype, Test",
+        "Define, Empathize, Prototype, Ideate, Test",
+        "Ideate, Empathize, Define, Test, Prototype",
+        "Empathize, Ideate, Define, Prototype, Test"
+      ],
+      "answerIndex": 0,
+      "explanation": "The five stages are Empathize, Define, Ideate, Prototype, and Test."
+    },
+    {
+      "question": "According to Bruce Tuckman’s model of group development, which stage is characterized by interpersonal conflict before cohesion is reached?",
+      "choices": ["Forming", "Storming", "Norming", "Performing"],
+      "answerIndex": 1,
+      "explanation": "Storming is the stage in which group members may experience friction and disagreement before establishing shared norms."
+    },
+    {
+      "question": "Which theorist formulated the Bureaucratic Approach to management?",
+      "choices": ["F. W. Taylor", "Henri Fayol", "Elton Mayo", "Max Weber"],
+      "answerIndex": 3,
+      "explanation": "Max Weber developed the Bureaucratic Approach; Taylor, Fayol, and Mayo are associated with other management approaches."
+    },
+    {
+      "question": "According to Everett Rogers’ Diffusion of Innovations model, what percentage of adopters constitutes the Late Majority?",
+      "choices": ["2.5%", "13.5%", "16%", "34%"],
+      "answerIndex": 3,
+      "explanation": "Rogers’ adopter categories assign 34% to the Late Majority."
+    }
+  ]
+}
