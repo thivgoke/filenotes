@@ -205,7 +205,6 @@
     const topActions = document.getElementById("top-actions");
     let data = loadData();
     let screen = "auth";
-    let authMode = "login";
     let message = "";
     let messageType = "error";
     let selectedTopicId = null;
@@ -322,28 +321,19 @@
       };
     }
     function renderAuth() {
-      const register = authMode === "register";
       app.innerHTML = `<section class="auth-wrap card">
         <div class="auth-story"><span class="eyebrow">A little progress, every day</span>
           <h1>Make room<br>to remember.</h1>
           <p>Turn the notes you already have into focused practice. One question at a time, at your own pace.</p>
         </div>
         <form class="auth-form" id="auth-form">
-          <h2>${register ? "Create your account" : "Welcome back"}</h2>
-          <p>${register ? "Start a personal study space." : "Sign in to pick up where you left off."}</p>
+          <h2>Welcome back</h2>
+          <p>Sign in to pick up where you left off.</p>
           ${message ? `<div class="alert ${messageType}">${escapeHtml(message)}</div>` : ""}
           <label class="field"><span>Username</span><input name="username" autocomplete="username" required minlength="3" maxlength="32" placeholder="Your name"></label>
-          <label class="field"><span>Password</span><input name="password" type="password" autocomplete="${register ? "new-password" : "current-password"}" required minlength="8" placeholder="At least 8 characters"></label>
-          ${register ? '<label class="field"><span>Confirm password</span><input name="confirmPassword" type="password" autocomplete="new-password" required minlength="8" placeholder="Enter your password again"></label>' : ""}
-          <div class="notice">This local demo stores usernames and salted password hashes in user-credentials.json on this computer. Passwords are never saved as plain text; do not use sensitive account passwords.</div>
-          <button class="button" type="submit">${register ? "Create account" : "Sign in"}</button>
-          <p class="auth-switch">${register ? "Already have an account?" : "New to Fieldnotes?"}
-            <button type="button" class="text-button" id="switch-auth">${register ? "Sign in" : "Create an account"}</button>
-          </p>
+          <label class="field"><span>Password</span><input name="password" type="password" autocomplete="current-password" required minlength="8" placeholder="Password"></label>
+          <button class="button" type="submit">Sign in</button>
         </form></section>`;
-      document.getElementById("switch-auth").addEventListener("click", () => {
-        authMode = register ? "login" : "register"; clearMessage(); render();
-      });
       document.getElementById("auth-form").addEventListener("submit", handleAuth);
     }
     async function handleAuth(event) {
@@ -352,12 +342,7 @@
       const username = String(form.get("username") || "").trim();
       const password = String(form.get("password") || "");
       try {
-        if (authMode === "register") {
-          if (password.length < 8) return showMessage("Choose a password with at least 8 characters.");
-          if (password !== form.get("confirmPassword")) return showMessage("Those passwords do not match.");
-        }
-        const action = authMode === "register" ? "register" : "login";
-        const response = await fetch(`/api/users/${action}`, {
+        const response = await fetch("/api/users/login", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ username, password })
@@ -382,9 +367,20 @@
         showMessage(error.message || "We couldn't complete sign-in. Please try again.");
       }
     }
-    function logout() {
+    async function logout() {
+      try {
+        const response = await fetch("/api/users/logout", { method: "POST" });
+        const payload = await response.json();
+        if (!response.ok || !payload.loggedOut) {
+          throw new Error(payload.error || `Server returned HTTP ${response.status}.`);
+        }
+      } catch (error) {
+        console.error("Could not clear the server sign-in session:", error);
+        showMessage(`Could not sign out safely: ${error.message}`);
+        return;
+      }
       data.currentUserId = null; activeQuiz = null; saveData();
-      screen = "auth"; authMode = "login"; clearMessage(); render();
+      screen = "auth"; clearMessage(); render();
     }
     function renderDashboard() {
       const results = userResults().sort((a, b) => b.completedAt - a.completedAt);

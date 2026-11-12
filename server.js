@@ -6,16 +6,19 @@ const path = require("node:path");
 const crypto = require("node:crypto");
 const { promisify } = require("node:util");
 
-const HOST = "127.0.0.1";
+const HOST = process.env.HOST || "0.0.0.0";
 const PORT = Number(process.env.PORT) || 4173;
 const ROOT = __dirname;
 const BANKS_DIR = path.join(ROOT, "question-banks");
-const SESSIONS_DIR = path.join(ROOT, "session-data");
-const DATA_DIR = path.join(ROOT, "data");
+const DATA_DIR = path.resolve(process.env.FIELDNOTES_DATA_DIR || path.join(ROOT, "data"));
+const SESSIONS_DIR = path.resolve(process.env.FIELDNOTES_SESSION_DIR || path.join(ROOT, "session-data"));
 const CREDENTIALS_FILE = path.join(DATA_DIR, "user-credentials.json");
 const pendingWrites = new Map();
 const scrypt = promisify(crypto.scrypt);
 let credentialQueue = Promise.resolve();
+const SESSION_COOKIE = "fieldnotes_session";
+const SESSION_LIFETIME_SECONDS = 30 * 24 * 60 * 60;
+const SESSION_SECRET = process.env.SESSION_SECRET || crypto.randomBytes(32).toString("hex");
 const contentTypes = {
   ".html": "text/html; charset=utf-8",
   ".js": "text/javascript; charset=utf-8",
@@ -32,13 +35,72 @@ function sendJson(response, status, value) {
   response.end(JSON.stringify(value));
 }
 
-function requireLocalOrigin(request, response) {
+function requireSameOrigin(request, response) {
   const origin = request.headers.origin;
-  if (origin && origin !== `http://${HOST}:${PORT}` && origin !== `http://localhost:${PORT}`) {
-    sendJson(response, 403, { error: "Requests must come from the local quiz app." });
-    return false;
+  if (origin) {
+    let parsedOrigin;
+    try {
+      parsedOrigin = new URL(origin);
+    } catch {
+      sendJson(response, 403, { error: "Invalid request origin." });
+      return false;
+    }
+    const requestHost = String(request.headers["x-forwarded-host"] || request.headers.host || "").split(",")[0].trim();
+    const requestProtocol = String(request.headers["x-forwarded-proto"] || "http").split(",")[0].trim();
+    if (parsedOrigin.host.toLowerCase() !== requestHost.toLowerCase() ||
+        parsedOrigin.protocol !== `${requestProtocol}:`) {
+      sendJson(response, 403, { error: "Requests must come from the quiz site." });
+      return false;
+    }
   }
   return true;
+}
+
+function cookieValue(request, name) {
+  const cookies = String(request.headers.cookie || "").split(";");
+  const entry = cookies.map(cookie => cookie.trim()).find(cookie => cookie.startsWith(`${name}=`));
+  return entry ? entry.slice(name.length + 1) : "";
+}
+
+function sessionSignature(value) {
+  return crypto.createHmac("sha256", SESSION_SECRET).update(value).digest("base64url");
+}
+
+function createSessionToken(userId, sessionVersion) {
+  const expiresAt = Math.floor(Date.now() / 1000) + SESSION_LIFETIME_SECONDS;
+  const payload = `${userId}.${sessionVersion}.${expiresAt}`;
+  return `${payload}.${sessionSignature(payload)}`;
+}
+
+async function getSessionUserId(request) {
+  const token = cookieValue(request, SESSION_COOKIE);
+  const [userId, sessionVersion, expiresAtText, signature, extra] = token.split(".");
+  if (!userId || !sessionVersion || !expiresAtText || !signature || extra !== undefined) return null;
+  const expiresAt = Number(expiresAtText);
+  if (!Number.isSafeInteger(expiresAt) || expiresAt <= Math.floor(Date.now() / 1000)) return null;
+  const payload = `${userId}.${sessionVersion}.${expiresAtText}`;
+  const expected = Buffer.from(sessionSignature(payload));
+  const actual = Buffer.from(signature);
+  if (expected.length !== actual.length || !crypto.timingSafeEqual(expected, actual)) return null;
+  const credentials = await loadCredentials();
+  const user = credentials.users.find(item => item.id === userId);
+  return user && user.sessionVersion === sessionVersion ? userId : null;
+}
+
+async function revokeUserSessions(userId) {
+  await withCredentialLock(async () => {
+    const credentials = await loadCredentials();
+    const user = credentials.users.find(item => item.id === userId);
+    if (!user) return;
+    user.sessionVersion = crypto.randomBytes(16).toString("hex");
+    await saveCredentials(credentials);
+  });
+}
+
+function sessionCookie(request, value, maxAge) {
+  const forwardedProtocol = String(request.headers["x-forwarded-proto"] || "").split(",")[0].trim();
+  const secure = forwardedProtocol === "https" || request.socket.encrypted;
+  return `${SESSION_COOKIE}=${encodeURIComponent(value)}; HttpOnly; SameSite=Strict; Path=/; Max-Age=${maxAge}${secure ? "; Secure" : ""}`;
 }
 
 function withCredentialLock(operation) {
@@ -79,32 +141,13 @@ async function saveCredentials(credentials) {
   await fs.rename(temporaryPath, CREDENTIALS_FILE);
 }
 
-async function authenticateUser(action, payload) {
+async function authenticateUser(payload) {
   return withCredentialLock(async () => {
     const { username, password } = validateCredentialsInput(payload);
     const credentials = await loadCredentials();
     const existing = credentials.users.find(user =>
       typeof user.username === "string" && user.username.toLowerCase() === username.toLowerCase()
     );
-
-    if (action === "register") {
-      if (existing) {
-        throw Object.assign(new Error("That username already exists."), { statusCode: 409 });
-      }
-      const salt = crypto.randomBytes(16).toString("hex");
-      const passwordHash = (await scrypt(password, salt, 64)).toString("hex");
-      const user = {
-        id: crypto.randomUUID(),
-        username,
-        passwordAlgorithm: "scrypt",
-        salt,
-        passwordHash,
-        createdAt: new Date().toISOString()
-      };
-      credentials.users.push(user);
-      await saveCredentials(credentials);
-      return { id: user.id, username: user.username };
-    }
 
     if (!existing || existing.passwordAlgorithm !== "scrypt" ||
         typeof existing.salt !== "string" || typeof existing.passwordHash !== "string") {
@@ -115,7 +158,37 @@ async function authenticateUser(action, payload) {
     if (expectedHash.length !== actualHash.length || !crypto.timingSafeEqual(actualHash, expectedHash)) {
       throw Object.assign(new Error("Username or password is incorrect."), { statusCode: 401 });
     }
-    return { id: existing.id, username: existing.username };
+    if (!existing.sessionVersion) {
+      existing.sessionVersion = crypto.randomBytes(16).toString("hex");
+      await saveCredentials(credentials);
+    }
+    return { id: existing.id, username: existing.username, sessionVersion: existing.sessionVersion };
+  });
+}
+
+async function ensureInitialUser() {
+  const username = process.env.INITIAL_USERNAME;
+  const password = process.env.INITIAL_PASSWORD;
+  if (!username && !password) return;
+  if (!username || !password) throw new Error("Set both INITIAL_USERNAME and INITIAL_PASSWORD to initialize the first account.");
+
+  await withCredentialLock(async () => {
+    const credentials = await loadCredentials();
+    if (credentials.users.length) return;
+    const input = validateCredentialsInput({ username, password });
+    const salt = crypto.randomBytes(16).toString("hex");
+    const passwordHash = (await scrypt(input.password, salt, 64)).toString("hex");
+    credentials.users.push({
+      id: crypto.randomUUID(),
+      username: input.username,
+      passwordAlgorithm: "scrypt",
+      salt,
+      passwordHash,
+      sessionVersion: crypto.randomBytes(16).toString("hex"),
+      createdAt: new Date().toISOString()
+    });
+    await saveCredentials(credentials);
+    console.log("Initialized the first Fieldnotes account from environment settings.");
   });
 }
 
@@ -212,12 +285,24 @@ async function saveAttempt(topicFileName, attempt) {
 
 async function handleRequest(request, response) {
   const requestUrl = new URL(request.url, `http://${request.headers.host || `${HOST}:${PORT}`}`);
-  if ((requestUrl.pathname === "/api/users/register" || requestUrl.pathname === "/api/users/login") &&
-      request.method === "POST") {
-    if (!requireLocalOrigin(request, response)) return;
-    const action = requestUrl.pathname.endsWith("/register") ? "register" : "login";
-    const user = await authenticateUser(action, await readRequestBody(request));
-    return sendJson(response, action === "register" ? 201 : 200, { user });
+  if (requestUrl.pathname === "/healthz" && request.method === "GET") {
+    return sendJson(response, 200, { ok: true });
+  }
+  if (requestUrl.pathname === "/api/users/register") {
+    return sendJson(response, 404, { error: "Account registration is disabled." });
+  }
+  if (requestUrl.pathname === "/api/users/login" && request.method === "POST") {
+    if (!requireSameOrigin(request, response)) return;
+    const user = await authenticateUser(await readRequestBody(request));
+    response.setHeader("Set-Cookie", sessionCookie(request, createSessionToken(user.id, user.sessionVersion), SESSION_LIFETIME_SECONDS));
+    return sendJson(response, 200, { user: { id: user.id, username: user.username } });
+  }
+  if (requestUrl.pathname === "/api/users/logout" && request.method === "POST") {
+    if (!requireSameOrigin(request, response)) return;
+    const userId = await getSessionUserId(request);
+    if (userId) await revokeUserSessions(userId);
+    response.setHeader("Set-Cookie", sessionCookie(request, "", 0));
+    return sendJson(response, 200, { loggedOut: true });
   }
 
   if (requestUrl.pathname === "/api/question-banks" && request.method === "GET") {
@@ -232,7 +317,9 @@ async function handleRequest(request, response) {
   }
 
   if (requestUrl.pathname === "/api/session-attempts" && request.method === "POST") {
-    if (!requireLocalOrigin(request, response)) return;
+    if (!requireSameOrigin(request, response)) return;
+    const userId = await getSessionUserId(request);
+    if (!userId) return sendJson(response, 401, { error: "Sign in before saving a quiz session." });
     const payload = await readRequestBody(request);
     const bankFiles = new Set(
       (await fs.readdir(BANKS_DIR, { withFileTypes: true }))
@@ -240,6 +327,7 @@ async function handleRequest(request, response) {
         .map(item => item.name)
     );
     const attempt = validateAttempt(payload, bankFiles);
+    if (attempt.userId !== userId) return sendJson(response, 403, { error: "Session does not belong to the signed-in user." });
     const fileName = await saveAttempt(payload.topicFileName, attempt);
     return sendJson(response, 200, { saved: true, fileName });
   }
@@ -290,7 +378,15 @@ const server = http.createServer((request, response) => {
   });
 });
 
-server.listen(PORT, HOST, () => {
-  console.log(`Fieldnotes is running at http://${HOST}:${PORT}`);
-  console.log("Press Ctrl+C to stop the local server.");
+async function startServer() {
+ await ensureInitialUser();
+ server.listen(PORT, HOST, () => {
+   console.log(`Fieldnotes is running on port ${PORT}`);
+   if (HOST === "127.0.0.1") console.log(`Open http://127.0.0.1:${PORT} in your browser.`);
+ });
+}
+
+startServer().catch(error => {
+ console.error("Could not start Fieldnotes:", error);
+ process.exitCode = 1;
 });

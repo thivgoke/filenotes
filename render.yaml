@@ -1,0 +1,24 @@
+services:
+  - type: web
+    name: filenotes
+    runtime: node
+    plan: starter
+    region: oregon
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /healthz
+    disk:
+      name: filenotes-data
+      mountPath: /var/data
+      sizeGB: 1
+    envVars:
+      - key: FIELDNOTES_DATA_DIR
+        value: /var/data
+      - key: FIELDNOTES_SESSION_DIR
+        value: /var/data/session-data
+      - key: SESSION_SECRET
+        generateValue: true
+      - key: INITIAL_USERNAME
+        sync: false
+      - key: INITIAL_PASSWORD
+        sync: false
