@@ -188,7 +188,6 @@
     <main id="app" aria-live="polite"></main>
     <footer><div class="footer-inner">
       <span>Fieldnotes · Your study space, kept simple.</span>
-      <span>Local demo: account records and completed sessions stay on this computer.</span>
     </div></footer>
   </div>
   <script>
@@ -300,6 +299,13 @@
     }
     function clearMessage() { message = ""; messageType = "error"; }
     function showMessage(text, type = "error") { message = text; messageType = type; render(); }
+    async function readApiResponse(response) {
+      const contentType = response.headers.get("content-type") || "";
+      if (!contentType.toLowerCase().includes("application/json")) {
+        throw new Error("The app server returned a webpage instead of quiz data. Open the Node.js app URL, or run “npm start” locally. GitHub Pages cannot serve quiz data.");
+      }
+      return response.json();
+    }
     function renderHeader() {
       const user = currentUser();
       topActions.innerHTML = user
@@ -347,7 +353,7 @@
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ username, password })
         });
-        const payload = await response.json();
+        const payload = await readApiResponse(response);
         if (!response.ok) throw new Error(payload.error || `Server returned HTTP ${response.status}.`);
         if (!payload.user || typeof payload.user.id !== "string" || typeof payload.user.username !== "string") {
           throw new Error("The local server returned an invalid account record.");
@@ -370,7 +376,7 @@
     async function logout() {
       try {
         const response = await fetch("/api/users/logout", { method: "POST" });
-        const payload = await response.json();
+        const payload = await readApiResponse(response);
         if (!response.ok || !payload.loggedOut) {
           throw new Error(payload.error || `Server returned HTTP ${response.status}.`);
         }
@@ -698,7 +704,7 @@
     async function loadQuestionBanks() {
       try {
         const response = await fetch("/api/question-banks", { cache: "no-store" });
-        const payload = await response.json();
+        const payload = await readApiResponse(response);
         if (!response.ok) throw new Error(payload.error || `Server returned HTTP ${response.status}.`);
         if (!payload || !Array.isArray(payload.banks)) throw new Error("The server returned an invalid question-bank list.");
 
@@ -749,7 +755,7 @@
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ topicFileName, attempt: result })
       });
-      const payload = await response.json();
+      const payload = await readApiResponse(response);
       if (!response.ok || !payload.saved || typeof payload.fileName !== "string") {
         throw new Error(payload.error || `Server returned HTTP ${response.status}.`);
       }
